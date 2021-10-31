@@ -3,7 +3,7 @@ package com.pietro.scrutinio_Elettronico;
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Utente
  * a cui viene assegnato un nome ed un cognome sotto forma di stringhe
- * per riconoscerli
+ * per riconoscerli 
  */
 public abstract class Utente {
 	protected String nome, cognome;
