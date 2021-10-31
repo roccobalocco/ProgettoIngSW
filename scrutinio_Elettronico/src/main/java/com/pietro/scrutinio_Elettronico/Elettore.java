@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Elettore, condividono le caratteristiche
- * degli oggetti Utenti, implementando perÃ³ metodi specifici per le votazioni, sono inoltre rappresentati
- * da piÃº dati anagrafici per riconoscerli in fase di votazione, mantenendo l'anonimato di questi dati
+ * degli oggetti Utenti, implementando peró metodi specifici per le votazioni, sono inoltre rappresentati
+ * da piú dati anagrafici per riconoscerli in fase di votazione, mantenendo l'anonimato di questi dati
  * all'esterno del sistema.
  */
 public class Elettore extends Utente {
