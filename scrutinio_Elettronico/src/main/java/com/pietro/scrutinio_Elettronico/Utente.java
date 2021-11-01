@@ -1,4 +1,4 @@
-package com.pietro.scrutinio_Elettronico;
+package scrutinio_Elettronico.src.main.java.com.pietro.scrutinio_Elettronico;
 
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Utente

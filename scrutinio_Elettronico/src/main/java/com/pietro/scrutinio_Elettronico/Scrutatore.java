@@ -1,4 +1,5 @@
-package com.pietro.scrutinio_Elettronico;
+package scrutinio_Elettronico.src.main.java.com.pietro.scrutinio_Elettronico;
+
 
 import java.time.LocalDateTime;
 
@@ -13,8 +14,8 @@ public class Scrutatore extends Utente {
 	/*@
 	 *also;
 	 @*/
-	public Scrutatore(String n, String c) {
-		super(n, c);
+	public Scrutatore(String n, String c, String m) {
+		super(n, c, m);
 		
 	}
 	
