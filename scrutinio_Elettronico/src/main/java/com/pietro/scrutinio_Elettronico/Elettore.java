@@ -1,4 +1,4 @@
-package com.pietro.scrutinio_Elettronico;
+package scrutinio_Elettronico.src.main.java.com.pietro.scrutinio_Elettronico;
 
 import java.time.LocalDate;
 
@@ -6,8 +6,7 @@ import java.time.LocalDate;
  * Le istanze di questa classe rappresentano oggetti immutabili Elettore, condividono le caratteristiche
  * degli oggetti Utenti, implementando peró metodi specifici per le votazioni, sono inoltre rappresentati
  * da piú dati anagrafici per riconoscerli in fase di votazione, mantenendo l'anonimato di questi dati
- * all'esterno del sistema
-
+ * all'esterno del sistema.
  */
 public class Elettore extends Utente {
 	@SuppressWarnings("unused")
@@ -21,8 +20,8 @@ public class Elettore extends Utente {
 	 *         in != null && !in.equals("") && nid != null && !nid.equals("") &&
 	 *         day > 0 && month > 0 && year > 2020;
 	 @*/
-	public Elettore(String n, String c, String cf, String p, String cm, String in, String nid, int day, int month, int year) {
-		super(n, c); 
+	public Elettore(String n, String c, String m, String cf, String p, String cm, String in, String nid, int day, int month, int year) {
+		super(n, c, m); 
 		CF = cf; comune = cm; indirizzo = in; num_carta_id = nid; 
 		if (day < 10) {
 			data_nascita = LocalDate.parse(year+"-"+month+"-0"+day);

@@ -1,4 +1,4 @@
-package com.pietro.scrutinio_Elettronico;
+package scrutinio_Elettronico.src.main.java.com.pietro.scrutinio_Elettronico;
 
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Utente
@@ -6,13 +6,13 @@ package com.pietro.scrutinio_Elettronico;
  * per riconoscerli 
  */
 public abstract class Utente {
-	protected String nome, cognome;
+	protected final String nome, cognome, mail;
 	
 	/*@
-	 *requires n != null && c != null && !n.equals("") && !c.equals("");
+	 *requires n != null && c != null && !n.equals("") && !c.equals("") && m != null && !m.equals("");
 	 @*/
-	public Utente(String n, String c) {
-		nome = n; cognome = c;
+	public Utente(String n, String c, String m) {
+		nome = n; cognome = c; mail = m;
 	}
 	
 	public abstract boolean equals(Object o); 
