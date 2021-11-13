@@ -9,27 +9,28 @@ import java.time.LocalDate;
  * all'esterno del sistema.
  */
 public class Elettore extends Utente {
-	private final String nazione_nascita, comune_nascita;
+	/*@ public invariant nazione_nascita != null && (nazione_nascita.equals("Italia") ==> comune_nascita != null);@*/
+	private final /*@ spec_public @*/ String nazione_nascita, comune_nascita;
+	/*@ public invariant data_nascita.isBefore(LocalDate.now()); @*/
 	private final /*@ spec_public @*/ LocalDate data_nascita;
-	private final char sesso;
-	private final char[] cf;
+	/*@ public invariant sesso == 'm'|| sesso == 'f'; @*/
+	private final /*@ spec_public @*/ char sesso;
+	/*@ public invariant this.cf_isOk(); @*/
+	private final /*@ spec_public @*/ char[] cf;
+	/*@ public invariant voto == true || voto == false; @*/
 	private boolean /*@ spec_public @*/ voto;
 	
-	/*@
-	 *also;
-	 *requires (sex == 'm' || sex == 'f') && (nazione.equals("Italia") ==> comune != null);
-	 *ensures data_nascita.isBefore(LocalDate.now()) && cf_isOk(cf);
-	 @*/
-	public Elettore(String n, String c, String m, char[] cf, String comune, String nazione, char sex, int day, int month, int year) {
-		super(n, c, m);
+
+	public Elettore(String n, String c, char[] cf, String comune, String nazione, char sex, int day, int month, int year) {
+		super(n, c);
 		data_nascita = LocalDate.of(year,  month, day);
 		if (!data_nascita.isBefore(LocalDate.now())) {
 			throw new IllegalArgumentException(data_nascita.toString()+" non é una data di nascita ammissibile \n");
 		}
-		if(!cf_isOk(cf)) {
+		this.cf = cf;
+		if(!cf_isOk()) {
 			throw new IllegalArgumentException("Il codice fiscale inserito non é valido \n");
 		}
-		this.cf = cf;
 		nazione_nascita = nazione;
 		comune_nascita = comune;
 		sesso = sex;
@@ -44,12 +45,12 @@ public class Elettore extends Utente {
 		}
 	}
 	
-	private boolean /*@ spec_public @*/  cf_isOk(char[] x) {
-		boolean val = (Character.isLetter(x[0]) && Character.isLetter(x[1]) && Character.isLetter(x[2]) && Character.isLetter(x[3]) && Character.isLetter(x[4]) && Character.isLetter(x[5]));
+	private /*@ pure spec_public @*/ boolean cf_isOk() {
+		boolean val = (Character.isLetter(cf[0]) && Character.isLetter(cf[1]) && Character.isLetter(cf[2]) && Character.isLetter(cf[3]) && Character.isLetter(cf[4]) && Character.isLetter(cf[5]));
 		if (!val) { return false; }
-		val = (this.data_nascita.getYear() == Integer.parseInt(String.valueOf(x[6])+String.valueOf(x[7])));
+		val = (this.data_nascita.getYear() == Integer.parseInt(String.valueOf(cf[6])+String.valueOf(cf[7])));
 		if (!val) { return false; }
-		val = (this.data_nascita.getMonthValue() == getMonthEnum(x[8]) && Character.isDigit(x[9]) && Character.isDigit(x[10]));
+		val = (this.data_nascita.getMonthValue() == getMonthEnum(cf[8]) && Character.isDigit(cf[9]) && Character.isDigit(cf[10]));
 		if (!val) { return false; }
 		/*controllo necessario sugli ultimi 5 elementi, ANCHE IN JML */
 		return val;
