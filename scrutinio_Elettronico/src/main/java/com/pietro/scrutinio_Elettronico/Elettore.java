@@ -25,11 +25,11 @@ public class Elettore extends Utente {
 		super(n, c);
 		data_nascita = LocalDate.of(year,  month, day);
 		if (!data_nascita.isBefore(LocalDate.now())) {
-			throw new IllegalArgumentException(data_nascita.toString()+" non é una data di nascita ammissibile \n");
+			throw new IllegalArgumentException(data_nascita.toString()+" non e' una data di nascita ammissibile \n");
 		}
 		this.cf = cf;
 		if(!cf_isOk()) {
-			throw new IllegalArgumentException("Il codice fiscale inserito non é valido \n");
+			throw new IllegalArgumentException("Il codice fiscale inserito non e' valido \n");
 		}
 		nazione_nascita = nazione;
 		comune_nascita = comune;
@@ -47,7 +47,7 @@ public class Elettore extends Utente {
 		}
 	}
 	
-	// il seguente metodo restituisce true se il codice fiscale inserito é valido altrimenti restituisce false
+	// il seguente metodo restituisce true se il codice fiscale inserito e' valido altrimenti restituisce false
 	private /*@ pure spec_public @*/ boolean cf_isOk() {
 		boolean val = (Character.isLetter(cf[0]) && Character.isLetter(cf[1]) && Character.isLetter(cf[2]) && Character.isLetter(cf[3]) && Character.isLetter(cf[4]) && Character.isLetter(cf[5]));
 		if (!val) { return false; }
@@ -59,7 +59,7 @@ public class Elettore extends Utente {
 		return val;
 	}
 	
-	// il seguente metodo restituisce true se l'elettore é maggiorenne altrimenti restituisce false
+	// il seguente metodo restituisce true se l'elettore e' maggiorenne altrimenti restituisce false
 	private /*@ pure spec_public @*/ static boolean isAdult(LocalDate birth_date) {
 		Period p = Period.between(birth_date, LocalDate.now());
 		if (p.getYears() >= 18) {

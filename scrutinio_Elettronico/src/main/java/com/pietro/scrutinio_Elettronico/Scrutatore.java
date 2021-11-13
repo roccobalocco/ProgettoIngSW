@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Scrutatore, condividono le caratteristiche
- * degli oggetti Utenti, implementando peró metodi specifici per la gestione delle votazioni.
+ * degli oggetti Utenti, implementando pero' metodi specifici per la gestione delle votazioni.
  */
 public class Scrutatore extends Utente {
 	@SuppressWarnings("unused")
@@ -14,8 +14,8 @@ public class Scrutatore extends Utente {
 	/*@
 	 *also;
 	 @*/
-	public Scrutatore(String n, String c, String m) {
-		super(n, c, m);
+	public Scrutatore(String n, String c) {
+		super(n, c);
 		
 	}
 	
