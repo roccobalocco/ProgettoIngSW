@@ -1,6 +1,8 @@
 package scrutinio_Elettronico.src.main.java.com.pietro.scrutinio_Elettronico;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.lang.StringBuilder;
 
 /*Overview: 
  * Le istanze di questa classe rappresentano oggetti immutabili Elettore, condividono le caratteristiche
@@ -17,10 +19,8 @@ public class Elettore extends Utente {
 	private final /*@ spec_public @*/ char sesso;
 	/*@ public invariant this.cf_isOk(); @*/
 	private final /*@ spec_public @*/ char[] cf;
-	/*@ public invariant voto == true || voto == false; @*/
-	private boolean /*@ spec_public @*/ voto;
+	private /*@ spec_public @*/ boolean voto;
 	
-
 	public Elettore(String n, String c, char[] cf, String comune, String nazione, char sex, int day, int month, int year) {
 		super(n, c);
 		data_nascita = LocalDate.of(year,  month, day);
@@ -33,11 +33,13 @@ public class Elettore extends Utente {
 		}
 		nazione_nascita = nazione;
 		comune_nascita = comune;
-		sesso = sex;
+		sesso = Character.toLowerCase(sex);
 		voto = false;
 	}
 	
-	private int getMonthEnum(char x) {
+	// il seguente metodo restituisce il numero corrispondente al mese enumerato come lettera alfabetica
+	// 'a' = gennaio = 1; 'b' = febbraio = 2; ...
+	private static int getMonthEnum(char x) {
 		switch(x) {
 		case 'a': return 1; case 'b': return 2; case 'c': return 3; case 'd': return 4; case 'e': return 5; case 'f': return 6;
 		case 'g': return 7; case 'h': return 8; case 'i': return 9; case 'j': return 10; case 'k': return 11; case 'l': return 12;
@@ -45,6 +47,7 @@ public class Elettore extends Utente {
 		}
 	}
 	
+	// il seguente metodo restituisce true se il codice fiscale inserito é valido altrimenti restituisce false
 	private /*@ pure spec_public @*/ boolean cf_isOk() {
 		boolean val = (Character.isLetter(cf[0]) && Character.isLetter(cf[1]) && Character.isLetter(cf[2]) && Character.isLetter(cf[3]) && Character.isLetter(cf[4]) && Character.isLetter(cf[5]));
 		if (!val) { return false; }
@@ -56,8 +59,19 @@ public class Elettore extends Utente {
 		return val;
 	}
 	
-	public boolean esprimi_voto(/*something relate to votation */) {
-		if (!this.voto) {
+	// il seguente metodo restituisce true se l'elettore é maggiorenne altrimenti restituisce false
+	private /*@ pure spec_public @*/ static boolean isAdult(LocalDate birth_date) {
+		Period p = Period.between(birth_date, LocalDate.now());
+		if (p.getYears() >= 18) {
+			return true;
+		}
+		return false;
+	}
+	
+	//@ requires this.voto == false;
+	//@ ensures isAdult(this.data_nascita);
+	public boolean esprimi_voto(/*something relates to votation */) {
+		if (!this.voto && isAdult(this.data_nascita)) {
 			voto = true;
 			return true;
 		}
@@ -71,7 +85,12 @@ public class Elettore extends Utente {
 	}
 	
 	public String toString() {
-		return "";
+		StringBuilder s = new StringBuilder("Nome: "+super.nome+"/nCognome: "+super.cognome);
+		s.append("\nCodice fiscale: ");
+		s.append(this.cf);
+		s.append("\nNazione di nascita: "+this.nazione_nascita.toString()+". Comune di nascita: "+this.comune_nascita);
+		s.append("\nSesso: "+this.sesso);
+		return s.toString();
 	}
 
 }
