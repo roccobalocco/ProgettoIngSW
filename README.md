@@ -1,3 +1,4 @@
+
 # Progetto Votazione e Scrutinio elettronico:
 
 ## Tabella dei contenuti
