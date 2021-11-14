@@ -3,4 +3,12 @@
   <groupId>com.pietro</groupId>
   <artifactId>Votation</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+   <maven.compiler.source>6</maven.compiler.source>
+   <maven.compiler.target>1.6</maven.compiler.target>
+ </properties>
+  <build>
+  	<sourceDirectory>src</sourceDirectory>
+  	<testSourceDirectory>test</testSourceDirectory>
+  </build>
 </project>

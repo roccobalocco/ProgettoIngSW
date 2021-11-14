@@ -1,6 +1,6 @@
-
 import java.time.LocalDate;
 import java.time.Period;
+
 import java.lang.StringBuilder;
 
 /*Overview: 
@@ -36,26 +36,16 @@ public class Elettore extends Utente {
 		voto = false;
 	}
 	
-	// il seguente metodo restituisce il numero corrispondente al mese enumerato come lettera alfabetica
-	// 'a' = gennaio = 1; 'b' = febbraio = 2; ...
-	private static int getMonthEnum(char x) {
-		switch(x) {
-		case 'a': return 1; case 'b': return 2; case 'c': return 3; case 'd': return 4; case 'e': return 5; case 'f': return 6;
-		case 'g': return 7; case 'h': return 8; case 'i': return 9; case 'j': return 10; case 'k': return 11; case 'l': return 12;
-		default: throw new IllegalArgumentException("Il mese inserito non esiste \n");
-		}
-	}
 	
 	// il seguente metodo restituisce true se il codice fiscale inserito e' valido altrimenti restituisce false
 	private /*@ pure spec_public @*/ boolean cf_isOk() {
-		boolean val = (Character.isLetter(cf[0]) && Character.isLetter(cf[1]) && Character.isLetter(cf[2]) && Character.isLetter(cf[3]) && Character.isLetter(cf[4]) && Character.isLetter(cf[5]));
-		if (!val) { return false; }
-		val = (this.data_nascita.getYear() == Integer.parseInt(String.valueOf(cf[6])+String.valueOf(cf[7])));
-		if (!val) { return false; }
-		val = (this.data_nascita.getMonthValue() == getMonthEnum(cf[8]) && Character.isDigit(cf[9]) && Character.isDigit(cf[10]));
-		if (!val) { return false; }
-		/*controllo necessario sugli ultimi 5 elementi, ANCHE IN JML */
-		return val;
+		return CodiceFiscale.getLetter(this.nome).contentEquals(String.valueOf(this.cf, 0, 3)) 
+				&& CodiceFiscale.getLetter(this.cognome).contentEquals(String.valueOf(this.cf, 3, 3))
+				&& Integer.valueOf(CodiceFiscale.getYear(this.data_nascita.getYear())) == Integer.valueOf(String.valueOf(this.cf, 6, 2)) 
+				&& CodiceFiscale.getMonth(this.data_nascita.getMonthValue()).equals(String.valueOf(this.cf[8]))
+				&& CodiceFiscale.getDay(this.data_nascita.getDayOfMonth(), this.sesso).equals(String.valueOf(this.cf, 9, 2))
+				&& CodiceFiscale.getLetNum(this.nazione_nascita, this.comune_nascita).equals(String.valueOf(this.cf[11]))
+				&& Character.isDigit(this.cf[12]) && Character.isDigit(this.cf[13]) && Character.isDigit(this.cf[14]) && Character.isLetter(this.cf[15]);
 	}
 	
 	// il seguente metodo restituisce true se l'elettore e' maggiorenne altrimenti restituisce false
