@@ -13,19 +13,7 @@
    <maven.compiler.source>6</maven.compiler.source>
    <maven.compiler.target>1.6</maven.compiler.target>
  </properties>
- <!-- newthings 
-	<dependencies>
-        <dependency>
-            <groupId>com.pietro</groupId>
-            poni l'artifatto fxm <artifactId>javafx-controls</artifactId> 
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pietro</groupId>
-             poni l'artifatto fxml <artifactId>javafx-fxml</artifactId> 
-            <version>${javafx.version}</version>
-        </dependency>
-    </dependencies> -->
+
  
   <build>
   	<sourceDirectory>src</sourceDirectory>
