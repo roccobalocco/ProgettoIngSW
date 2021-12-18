@@ -25,9 +25,9 @@ public class ScrutatoreDAOImpl implements ScrutatoreDao {
 	      ResultSet resultSet = statement.executeQuery();
 	      //guarda se ci sono risultati
 	      while(resultSet.next()) 
-	    	  if (resultSet.getBoolean(4))
+	    	  if (resultSet.getBoolean(4)) 
 	    		  list.add(new Scrutatore(resultSet.getString(2), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(1)));
-	   
+	      
 	      //chiudo resultset e connessione
 	      resultSet.close();
 	      conn.close();
@@ -46,16 +46,17 @@ public class ScrutatoreDAOImpl implements ScrutatoreDao {
 	      //apro connessione
 	      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/votazioni?user=root&password=admin");
 	      //scrivo query
-	      String query = "SELECT * FROM utenti WHERE username = \"" + user + " \" AND MD5(password) = \"" + psw + "\"";
+	      String query = "SELECT * FROM utenti WHERE username = \"" + user + "\" AND password = \"" + psw + "\"";
 	      //creo oggetto statement per esecuzione query
 	      PreparedStatement statement = conn.prepareStatement(query);
 	      //eseguo la query
 	      ResultSet resultSet = statement.executeQuery();
 	      //guarda se ci sono risultati
-	      if(resultSet.next()) 
+	      if(resultSet.next()) {
+	  		System.out.println("Ci sono risultati");
 	    	  if (resultSet.getBoolean(4))
 	    		  scrutatore = new Scrutatore(resultSet.getString(2), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(1));
-	    		  
+	      }
 	      //chiudo resultset e connessione
 	      resultSet.close();
 	      conn.close();
@@ -84,7 +85,9 @@ public class ScrutatoreDAOImpl implements ScrutatoreDao {
 	      while(resultSet.next()) 
 	    	  if (resultSet.getBoolean(4))
 	    		  list.add(new Scrutatore(resultSet.getString(2), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(1)));
-	      
+	
+			
+		
 	      //chiudo resultset e connessione
 	      resultSet.close();
 	      conn.close();

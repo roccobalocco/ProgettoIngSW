@@ -1,18 +1,19 @@
 package controllers;
 
 import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.imageio.IIOException;
 
+import classes.ElettoreDAOImpl;
+import classes.ScrutatoreDAOImpl;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
 
 public class LoginController {
@@ -22,34 +23,28 @@ public class LoginController {
 	Alert a = new Alert(AlertType.NONE);
 	
 	private static boolean existInDb(String user, String psw){
-		boolean l = false;
-		try{
-		      //apro connessione
-		      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/votazioni?user=root&password=admin");
-		      //scrivo query
-		      String query = "SELECT * FROM utenti WHERE username = \"" + user + "\" AND password = \"" + psw + "\"";
-		      //creo oggetto statement per esecuzione query
-		      PreparedStatement statement = conn.prepareStatement(query);
-		      //eseguo la query
-		      ResultSet resultSet = statement.executeQuery();
-		      //guarda se ci sono risultati
-		      if(resultSet.next())
-		        l = true;
-		      
-		      //chiudo resultset e connessione
-		      resultSet.close();
-		      conn.close();
-		    }catch(SQLException e){
-		      System.out.println("SQLException: " + e.getMessage());
-		      System.out.println("SQLState: " + e.getSQLState());
-		      System.out.println("VendorError: " + e.getErrorCode());
-		    }
-		return l;
+		if((new ElettoreDAOImpl()).getUtenteByUserPassword(user, psw) != null) 
+			return true;
+		else 
+			if((new ScrutatoreDAOImpl()).getUtenteByUserPassword(user, psw) != null) 
+				return true;
+
+		System.out.println("Non esiste");
+		return false;
 	}
 	
-	@FXML
-	public void register() {
-		
+	public void logged(Stage primaryStage) {
+		try {
+            Parent root = FXMLLoader.load(getClass().getResource("logged.fxml"));
+            //Scene scene = new Scene(root);
+            
+            //primaryStage.setScene(scene);
+            //primaryStage.setTitle("Logged");
+            //primaryStage.setResizable(false);
+            //primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	@FXML
@@ -57,13 +52,15 @@ public class LoginController {
 		String userString = userField.getText();
 		String pswString = passwordField.getText();
 		if(existInDb(userString, pswString)) {
-			a.setAlertType(AlertType.INFORMATION);
+			/*a.setAlertType(AlertType.INFORMATION);
 			a.setContentText("Login effettuato con successo " + userString);
+			a.show();*/
+			logged(new Stage());
 		}else { 
 			a.setAlertType(AlertType.ERROR);
 			a.setContentText("Login non effettuato " + userString);
-		}
 			a.show();
+		}
 		
 	}
 }

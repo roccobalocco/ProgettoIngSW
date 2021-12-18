@@ -31,6 +31,11 @@ public class Scrutatore extends Utente {
 	public String getCognome() {
 		return cognome;
 	}
+	
+	@Override
+	public String toString() {
+		return "user: " + super.getUsername() + " id: " + this.id + " nome: " + this.nome + " cognome: " + this.cognome + " mail: " + this.mail;
+	}
 
 
 }

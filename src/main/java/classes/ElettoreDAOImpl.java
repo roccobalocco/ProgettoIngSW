@@ -46,7 +46,7 @@ public class ElettoreDAOImpl implements ElettoreDao {
 	      //apro connessione
 	      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/votazioni?user=root&password=admin");
 	      //scrivo query
-	      String query = "SELECT * FROM utenti WHERE username = \"" + user + " \" AND MD5(password) = \"" + psw + "\"";
+	      String query = "SELECT * FROM utenti WHERE username = \"" + user + "\" AND password = \"" + psw + "\"";
 	      //creo oggetto statement per esecuzione query
 	      PreparedStatement statement = conn.prepareStatement(query);
 	      //eseguo la query
