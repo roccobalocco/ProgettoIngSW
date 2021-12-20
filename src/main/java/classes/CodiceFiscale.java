@@ -1,3 +1,4 @@
+package classes;
 public class CodiceFiscale {
  
 	/*@ per ottenere le 3 lettere del nome e del cognome @*/
